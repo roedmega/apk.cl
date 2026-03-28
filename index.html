@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APK — Tu tienda online en minutos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --negro:#0c0c0a;--blanco:#f7f5ef;--crema:#ede9df;
+  --acento:#d4522a;--acento2:#e8753f;--gris:#888580;
+  --mono:'DM Mono',monospace;--serif:'Fraunces',serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--negro);color:var(--blanco);font-family:var(--mono);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid rgba(247,245,239,0.06);background:rgba(12,12,10,0.9);backdrop-filter:blur(12px)}
+.nav-logo{font-family:var(--serif);font-size:22px;font-weight:900;color:var(--blanco);letter-spacing:-1px}
+.nav-logo span{color:var(--acento)}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(247,245,239,0.5);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--blanco)}
+.nav-cta{background:var(--acento)!important;color:var(--blanco)!important;padding:8px 20px;border-radius:2px;transition:background .2s!important}
+.nav-cta:hover{background:var(--acento2)!important}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 48px 80px;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(247,245,239,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(247,245,239,0.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black,transparent)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--acento);border:1px solid rgba(212,82,42,0.3);padding:6px 14px;border-radius:2px;margin-bottom:32px;width:fit-content}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--acento);border-radius:50%;animation:pulso 2s infinite}
+@keyframes pulso{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-family:var(--serif);font-size:clamp(52px,8vw,110px);font-weight:900;line-height:0.92;letter-spacing:-3px;color:var(--blanco);margin-bottom:32px;opacity:0;animation:fadeUp .8s .1s forwards}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--acento)}
+.hero-sub{font-size:13px;line-height:1.8;color:rgba(247,245,239,0.5);max-width:480px;margin-bottom:48px;opacity:0;animation:fadeUp .8s .3s forwards}
+.hero-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .5s forwards}
+.btn-primary{background:var(--acento);color:var(--blanco);padding:16px 36px;border-radius:2px;text-decoration:none;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-family:var(--mono);transition:background .2s,transform .2s;display:inline-block;cursor:pointer;border:none}
+.btn-primary:hover{background:var(--acento2);transform:translateY(-1px)}
+.btn-secondary{color:rgba(247,245,239,0.5);font-size:12px;letter-spacing:0.08em;text-decoration:none;transition:color .2s;cursor:pointer;background:none;border:none;font-family:var(--mono)}
+.btn-secondary:hover{color:var(--blanco)}
+.hero-stats{display:flex;gap:48px;margin-top:80px;padding-top:48px;border-top:1px solid rgba(247,245,239,0.08);opacity:0;animation:fadeUp .8s .7s forwards}
+.stat-num{font-family:var(--serif);font-size:36px;font-weight:900;color:var(--blanco);letter-spacing:-2px}
+.stat-num span{color:var(--acento)}
+.stat-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gris);margin-top:4px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* TICKER */
+.ticker{background:var(--acento);padding:12px 0;overflow:hidden}
+.ticker-inner{display:flex;white-space:nowrap;animation:ticker 20s linear infinite}
+.ticker-item{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(247,245,239,0.9);padding:0 32px;display:flex;align-items:center;gap:16px}
+.ticker-item::after{content:'·';color:rgba(247,245,239,0.4)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECCIONES */
+.section{padding:100px 48px}
+.section-label{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--acento);margin-bottom:16px}
+.section-title{font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:900;letter-spacing:-2px;color:var(--blanco);margin-bottom:64px;line-height:1.05}
+.section-title em{font-style:italic;font-weight:300;color:var(--gris)}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(247,245,239,0.06)}
+.step{background:var(--negro);padding:40px 32px;transition:background .3s}
+.step:hover{background:#141412}
+.step-num{font-family:var(--serif);font-size:64px;font-weight:900;color:rgba(247,245,239,0.05);line-height:1;margin-bottom:24px;letter-spacing:-3px}
+.step-title{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--blanco);margin-bottom:12px}
+.step-desc{font-size:12px;line-height:1.8;color:var(--gris)}
+.step-time{margin-top:20px;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--acento)}
+
+/* RUBROS */
+.rubros-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(247,245,239,0.06)}
+.rubro-card{background:var(--negro);padding:36px;transition:background .3s;position:relative;overflow:hidden}
+.rubro-card:hover{background:#141412}
+.rubro-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--acento);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.rubro-card:hover::before{transform:scaleX(1)}
+.rubro-emoji{font-size:32px;margin-bottom:16px;display:block}
+.rubro-name{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--blanco);margin-bottom:8px}
+.rubro-url{font-size:11px;color:var(--gris);margin-bottom:16px}
+.rubro-url span{color:var(--acento)}
+.rubro-features{list-style:none;display:flex;flex-direction:column;gap:6px}
+.rubro-features li{font-size:11px;color:rgba(247,245,239,0.5);display:flex;align-items:center;gap:8px}
+.rubro-features li::before{content:'';width:4px;height:4px;background:var(--acento);border-radius:50%;flex-shrink:0}
+
+/* PRECIOS */
+.precios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(247,245,239,0.06)}
+.plan{background:var(--negro);padding:48px 36px;transition:background .3s}
+.plan:hover{background:#141412}
+.plan.featured{background:#141412;outline:1px solid var(--acento)}
+.plan-badge{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--acento);margin-bottom:20px;display:block}
+.plan-name{font-family:var(--serif);font-size:28px;font-weight:900;color:var(--blanco);letter-spacing:-1px;margin-bottom:8px}
+.plan-price{font-family:var(--serif);font-size:48px;font-weight:900;color:var(--blanco);letter-spacing:-3px;line-height:1;margin-bottom:4px}
+.plan-price sup{font-size:20px;letter-spacing:0;vertical-align:super}
+.plan-period{font-size:11px;color:var(--gris);letter-spacing:0.1em;margin-bottom:32px}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+.plan-features li{font-size:12px;color:rgba(247,245,239,0.6);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+.plan-features li.ok::before{content:'✓';color:var(--acento);font-weight:700;flex-shrink:0}
+.plan-features li.no{color:rgba(247,245,239,0.2)}
+.plan-features li.no::before{content:'—';color:rgba(247,245,239,0.15);flex-shrink:0}
+.plan-btn{display:block;text-align:center;text-decoration:none;padding:14px 24px;border-radius:2px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-family:var(--mono);transition:all .2s;cursor:pointer;border:none;width:100%}
+.plan-btn-primary{background:var(--acento);color:var(--blanco)}
+.plan-btn-primary:hover{background:var(--acento2)}
+.plan-btn-outline{border:1px solid rgba(247,245,239,0.15);color:rgba(247,245,239,0.5);background:transparent}
+.plan-btn-outline:hover{border-color:var(--blanco);color:var(--blanco)}
+
+/* MODAL DE REGISTRO */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .3s;padding:24px}
+.modal-overlay.active{opacity:1;visibility:visible}
+.modal{background:#141412;border:1px solid rgba(247,245,239,0.1);border-radius:4px;padding:48px;max-width:520px;width:100%;position:relative;transform:translateY(20px);transition:transform .3s}
+.modal-overlay.active .modal{transform:none}
+.modal-close{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--gris);font-size:20px;cursor:pointer;transition:color .2s;font-family:var(--mono)}
+.modal-close:hover{color:var(--blanco)}
+.modal-plan-badge{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--acento);margin-bottom:12px;display:block}
+.modal-title{font-family:var(--serif);font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:8px}
+.modal-subtitle{font-size:12px;color:var(--gris);margin-bottom:32px;line-height:1.6}
+.form-group{margin-bottom:20px}
+.form-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gris);margin-bottom:8px;display:block}
+.form-input{width:100%;background:rgba(247,245,239,0.05);border:1px solid rgba(247,245,239,0.1);border-radius:2px;padding:12px 16px;color:var(--blanco);font-family:var(--mono);font-size:13px;transition:border-color .2s;outline:none}
+.form-input:focus{border-color:var(--acento)}
+.form-input::placeholder{color:rgba(247,245,239,0.2)}
+.form-hint{font-size:10px;color:var(--gris);margin-top:6px}
+.form-hint span{color:var(--acento)}
+.form-preview{background:rgba(212,82,42,0.08);border:1px solid rgba(212,82,42,0.2);border-radius:2px;padding:10px 14px;font-size:11px;color:var(--acento);margin-top:6px;display:none}
+.form-submit{width:100%;margin-top:8px}
+.form-terms{font-size:10px;color:rgba(247,245,239,0.3);text-align:center;margin-top:16px;line-height:1.6}
+.form-error{background:rgba(212,82,42,0.1);border:1px solid rgba(212,82,42,0.3);border-radius:2px;padding:12px;font-size:12px;color:var(--acento);margin-bottom:16px;display:none}
+.form-loading{display:none;text-align:center;padding:20px;font-size:12px;color:var(--gris)}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(247,245,239,0.1);border-top-color:var(--acento);border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PÁGINA ÉXITO */
+.success-page{display:none;text-align:center;padding:40px 0}
+.success-icon{font-size:48px;margin-bottom:16px}
+.success-title{font-family:var(--serif);font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:12px}
+.success-url{background:rgba(247,245,239,0.05);border:1px solid rgba(247,245,239,0.1);border-radius:2px;padding:16px;font-size:14px;color:var(--acento);margin:20px 0;word-break:break-all;cursor:pointer;transition:background .2s}
+.success-url:hover{background:rgba(247,245,239,0.08)}
+.success-creds{background:rgba(247,245,239,0.03);border:1px solid rgba(247,245,239,0.08);border-radius:2px;padding:20px;text-align:left;margin:16px 0}
+.cred-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:12px;border-bottom:1px solid rgba(247,245,239,0.05)}
+.cred-row:last-child{border:none}
+.cred-key{color:var(--gris)}
+.cred-val{color:var(--blanco);font-weight:500}
+.success-wa{display:block;margin-top:20px}
+
+/* CTA FINAL */
+.cta-final{padding:120px 48px;text-align:center;background:linear-gradient(180deg,var(--negro) 0%,#141209 100%);position:relative;overflow:hidden}
+.cta-final::before{content:'APK';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--serif);font-size:clamp(120px,20vw,260px);font-weight:900;color:rgba(247,245,239,0.02);letter-spacing:-10px;pointer-events:none}
+.cta-final h2{font-family:var(--serif);font-size:clamp(36px,5vw,72px);font-weight:900;letter-spacing:-3px;color:var(--blanco);margin-bottom:20px;line-height:1;position:relative}
+.cta-final p{font-size:13px;color:var(--gris);margin-bottom:40px;line-height:1.8;position:relative}
+.cta-final .btn-primary{position:relative}
+
+/* FOOTER */
+footer{padding:32px 48px;border-top:1px solid rgba(247,245,239,0.06);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:var(--serif);font-size:16px;font-weight:900;color:rgba(247,245,239,0.3)}
+.footer-logo span{color:var(--acento)}
+.footer-copy{font-size:10px;color:rgba(247,245,239,0.2);letter-spacing:0.1em}
+
+@media(max-width:768px){
+  nav{padding:16px 24px}
+  .nav-links{display:none}
+  .hero{padding:120px 24px 60px}
+  .hero-stats{gap:24px;flex-wrap:wrap}
+  .section{padding:64px 24px}
+  .modal{padding:32px 24px}
+  footer{padding:24px}
+}
+
+.template-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.template-card{border:1px solid rgba(247,245,239,0.1);border-radius:2px;padding:12px;cursor:pointer;transition:all .2s;position:relative}
+.template-card:hover{border-color:var(--acento);background:rgba(212,82,42,0.05)}
+.template-card.selected{border-color:var(--acento);background:rgba(212,82,42,0.1)}
+.template-card.selected::after{content:'✓';position:absolute;top:8px;right:10px;color:var(--acento);font-size:12px;font-weight:700}
+.template-emoji{font-size:20px;margin-bottom:6px}
+.template-name{font-size:12px;color:var(--blanco);font-weight:500;margin-bottom:2px}
+.template-desc{font-size:10px;color:var(--gris);line-height:1.4}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">A<span>P</span>K</div>
+  <div class="nav-links">
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#rubros">Rubros</a>
+    <a href="#precios">Precios</a>
+    <a href="#precios" class="nav-cta">Crear mi tienda</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-badge">Disponible en Chile</div>
+  <h1>Tu tienda<br><em>online</em><br>en minutos.</h1>
+  <p class="hero-sub">Catálogo, pedidos y pagos online para tu negocio de barrio.<br>Sin código, sin servidores. Desde $9.990/mes.</p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="abrirModal('pro')">Crear mi tienda gratis →</button>
+    <a href="#como-funciona" class="btn-secondary">Ver cómo funciona</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">3<span>min</span></div>
+      <div class="stat-label">Para tener tu tienda lista</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0<span>%</span></div>
+      <div class="stat-label">Comisión por venta</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">30<span>días</span></div>
+      <div class="stat-label">Prueba gratis sin tarjeta</div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Verdulería</span><span class="ticker-item">Botillería</span>
+    <span class="ticker-item">Veterinaria</span><span class="ticker-item">Ferretería</span>
+    <span class="ticker-item">Minimarket</span><span class="ticker-item">Florería</span>
+    <span class="ticker-item">Almacén</span><span class="ticker-item">Rotisería</span>
+    <span class="ticker-item">Verdulería</span><span class="ticker-item">Botillería</span>
+    <span class="ticker-item">Veterinaria</span><span class="ticker-item">Ferretería</span>
+    <span class="ticker-item">Minimarket</span><span class="ticker-item">Florería</span>
+    <span class="ticker-item">Almacén</span><span class="ticker-item">Rotisería</span>
+  </div>
+</div>
+
+<section class="section" id="como-funciona">
+  <div class="section-label">Proceso</div>
+  <h2 class="section-title">Simple como debe ser.<br><em>Sin vueltas.</em></h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Elige tu plan</div>
+      <div class="step-desc">Selecciona el plan que se ajusta a tu negocio. Sin permanencia, cancela cuando quieras.</div>
+      <div class="step-time">30 segundos</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Nombra tu tienda</div>
+      <div class="step-desc">Elige el nombre y tu tienda queda en tutienda.6c.cl lista para compartir al instante.</div>
+      <div class="step-time">1 minuto</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Sube tus productos</div>
+      <div class="step-desc">Agrega fotos, precios y categorías desde tu panel. Sin conocimientos técnicos.</div>
+      <div class="step-time">5 minutos</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Empieza a vender</div>
+      <div class="step-desc">Comparte el link por WhatsApp o redes. Los pedidos llegan directo a tu teléfono.</div>
+      <div class="step-time">Desde hoy</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="rubros" style="padding-top:0">
+  <div class="section-label">Ejemplos</div>
+  <h2 class="section-title">Para cualquier<br><em>negocio de barrio.</em></h2>
+  <div class="rubros-grid">
+    <div class="rubro-card">
+      <span class="rubro-emoji">🥦</span>
+      <div class="rubro-name">Verdulería</div>
+      <div class="rubro-url"><span>tu-local</span>.6c.cl</div>
+      <ul class="rubro-features">
+        <li>Productos por kilo o unidad</li>
+        <li>Pedidos con delivery o retiro</li>
+        <li>Notificación por WhatsApp</li>
+      </ul>
+    </div>
+    <div class="rubro-card">
+      <span class="rubro-emoji">🍺</span>
+      <div class="rubro-name">Botillería</div>
+      <div class="rubro-url"><span>tu-local</span>.6c.cl</div>
+      <ul class="rubro-features">
+        <li>Catálogo con fotos</li>
+        <li>Pago online o efectivo</li>
+        <li>Control de stock</li>
+      </ul>
+    </div>
+    <div class="rubro-card">
+      <span class="rubro-emoji">🐾</span>
+      <div class="rubro-name">Veterinaria</div>
+      <div class="rubro-url"><span>tu-local</span>.6c.cl</div>
+      <ul class="rubro-features">
+        <li>Alimento a granel</li>
+        <li>Accesorios y medicamentos</li>
+        <li>Pedidos programados</li>
+      </ul>
+    </div>
+    <div class="rubro-card">
+      <span class="rubro-emoji">🔧</span>
+      <div class="rubro-name">Ferretería</div>
+      <div class="rubro-url"><span>tu-local</span>.6c.cl</div>
+      <ul class="rubro-features">
+        <li>Miles de productos</li>
+        <li>Búsqueda por categoría</li>
+        <li>Cotizaciones online</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="precios" style="background:#0a0a08">
+  <div class="section-label">Planes</div>
+  <h2 class="section-title">Precio justo,<br><em>sin sorpresas.</em></h2>
+  <div class="precios-grid">
+    <div class="plan">
+      <span class="plan-badge">Starter</span>
+      <div class="plan-name">Básico</div>
+      <div class="plan-price"><sup>$</sup>9.990</div>
+      <div class="plan-period">por mes · sin permanencia</div>
+      <ul class="plan-features">
+        <li class="ok">Tienda en tulocal.6c.cl</li>
+        <li class="ok">Catálogo ilimitado</li>
+        <li class="ok">Pedidos por WhatsApp</li>
+        <li class="ok">Panel de administración</li>
+        <li class="ok">30 días de prueba gratis</li>
+        <li class="no">Pagos online (MercadoPago)</li>
+        <li class="no">Estadísticas avanzadas</li>
+        <li class="no">Dominio propio</li>
+      </ul>
+      <button onclick="abrirModal('starter')" class="plan-btn plan-btn-outline">Empezar gratis →</button>
+    </div>
+    <div class="plan featured">
+      <span class="plan-badge">★ Más popular</span>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><sup>$</sup>19.990</div>
+      <div class="plan-period">por mes · sin permanencia</div>
+      <ul class="plan-features">
+        <li class="ok">Todo lo del plan Básico</li>
+        <li class="ok">Pagos online (MercadoPago)</li>
+        <li class="ok">Estadísticas de ventas</li>
+        <li class="ok">Reseñas de clientes</li>
+        <li class="ok">30 días de prueba gratis</li>
+        <li class="ok">Soporte prioritario</li>
+        <li class="no">Dominio propio</li>
+        <li class="no">Integración contable</li>
+      </ul>
+      <button onclick="abrirModal('pro')" class="plan-btn plan-btn-primary">Empezar gratis →</button>
+    </div>
+    <div class="plan">
+      <span class="plan-badge">Custom</span>
+      <div class="plan-name">A medida</div>
+      <div class="plan-price" style="font-size:28px;letter-spacing:-1px;margin-bottom:12px">Conversemos</div>
+      <div class="plan-period">precio según necesidades</div>
+      <ul class="plan-features">
+        <li class="ok">Todo lo del plan Pro</li>
+        <li class="ok">Dominio propio (.cl)</li>
+        <li class="ok">API acceso completo</li>
+        <li class="ok">SLA garantizado</li>
+        <li class="ok">Onboarding personalizado</li>
+        <li class="ok">Factura electrónica</li>
+        <li class="ok">Soporte dedicado</li>
+        <li class="ok">Integración contable</li>
+      </ul>
+      <a href="https://wa.me/56900000000?text=Hola,%20quiero%20info%20del%20plan%20Custom%20de%20APK" target="_blank" class="plan-btn plan-btn-outline">Contactar →</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <h2>¿Listo para<br>vender online?</h2>
+  <p>Tu tienda lista en 3 minutos.<br>30 días gratis, sin tarjeta de crédito.</p>
+  <button onclick="abrirModal('pro')" class="btn-primary">Crear mi tienda ahora →</button>
+</section>
+
+<footer>
+  <div class="footer-logo">A<span>P</span>K</div>
+  <div class="footer-copy">© 2026 APK.CL — Concepción, Chile</div>
+</footer>
+
+<!-- MODAL REGISTRO -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModalSiOverlay(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="cerrarModal()">✕</button>
+
+    <!-- FORMULARIO -->
+    <div id="formSection">
+      <span class="modal-plan-badge" id="modalPlanBadge">Plan Pro</span>
+      <div class="modal-title">Crea tu tienda</div>
+      <div class="modal-subtitle">30 días gratis. Sin tarjeta de crédito.<br>Tu tienda lista en menos de 3 minutos.</div>
+
+      <div class="form-error" id="formError"></div>
+
+      <div class="form-group">
+        <label class="form-label">Nombre de tu tienda</label>
+        <input type="text" class="form-input" id="inputNombre" placeholder="Ej: Verdulería Don Pedro" oninput="generarSlug()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL de tu tienda</label>
+        <input type="text" class="form-input" id="inputSlug" placeholder="mi-tienda" oninput="validarSlug()">
+        <div class="form-hint">Tu tienda quedará en: <span id="slugPreview">tu-tienda</span>.6c.cl</div>
+        <div class="form-preview" id="slugDisponible"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">WhatsApp del negocio</label>
+        <input type="text" class="form-input" id="inputWa" placeholder="56912345678">
+        <div class="form-hint">Para recibir notificaciones de pedidos</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tu email</label>
+        <input type="email" class="form-input" id="inputEmail" placeholder="tu@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tipo de tienda</label>
+        <select class="form-input" id="inputTemplate" onchange="templateActual=this.value" style="cursor:pointer">
+          <option value="tienda_general">🛒 Tienda general — verdulería, minimarket, almacén</option>
+          <option value="tienda_moda">👗 Moda y retail — ropa, accesorios, tecnología</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Contraseña del panel admin</label>
+        <input type="password" class="form-input" id="inputPass" placeholder="Mínimo 8 caracteres">
+      </div>
+
+      <div class="form-loading" id="formLoading">
+        <span class="spinner"></span> Creando tu tienda...
+      </div>
+
+      <button class="btn-primary form-submit" id="btnSubmit" onclick="registrar()">
+        Crear mi tienda gratis →
+      </button>
+      <div class="form-terms">Al registrarte aceptas los términos de servicio.<br>Sin permanencia — cancela cuando quieras.</div>
+    </div>
+
+    <!-- ÉXITO -->
+    <div class="success-page" id="successPage">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">¡Tu tienda está lista!</div>
+      <p style="font-size:12px;color:var(--gris);margin-bottom:16px">Haz clic para abrir tu tienda:</p>
+      <div class="success-url" id="successUrl" onclick="abrirTienda()"></div>
+      <div class="success-creds" id="successCreds"></div>
+      <a class="btn-primary success-wa" id="successWa" target="_blank">Abrir panel de administración →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://apk.cl/api';
+let planActual = 'pro';
+let templateActual = 'tienda_general';
+
+function selTemplate(t) {
+  templateActual = t;
+  const sel = document.getElementById('inputTemplate');
+  if (sel) sel.value = t;
+}
+
+function abrirModal(plan) {
+  planActual = plan;
+  const badges = {starter:'Plan Básico — $9.990/mes', pro:'Plan Pro — $19.990/mes'};
+  document.getElementById('modalPlanBadge').textContent = badges[plan] || badges.pro;
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function cerrarModalSiOverlay(e) {
+  if(e.target === document.getElementById('modalOverlay')) cerrarModal();
+}
+
+function generarSlug() {
+  const nombre = document.getElementById('inputNombre').value;
+  const slug = nombre.toLowerCase()
+    .replace(/[áàä]/g,'a').replace(/[éèë]/g,'e')
+    .replace(/[íìï]/g,'i').replace(/[óòö]/g,'o')
+    .replace(/[úùü]/g,'u').replace(/ñ/g,'n')
+    .replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-')
+    .replace(/^-|-$/g,'').substring(0,30);
+  document.getElementById('inputSlug').value = slug;
+  actualizarPreview(slug);
+}
+
+function validarSlug() {
+  const slug = document.getElementById('inputSlug').value;
+  actualizarPreview(slug);
+}
+
+function actualizarPreview(slug) {
+  document.getElementById('slugPreview').textContent = slug || 'tu-tienda';
+}
+
+async function registrar() {
+  const nombre = document.getElementById('inputNombre').value.trim();
+  const slug   = document.getElementById('inputSlug').value.trim().toLowerCase();
+  const wa     = document.getElementById('inputWa').value.trim();
+  const email  = document.getElementById('inputEmail').value.trim();
+  const pass   = document.getElementById('inputPass').value.trim();
+  const errDiv = document.getElementById('formError');
+
+  errDiv.style.display = 'none';
+
+  if(!nombre || !slug || !wa || !email || !pass) {
+    errDiv.textContent = 'Todos los campos son requeridos.';
+    errDiv.style.display = 'block'; return;
+  }
+  if(pass.length < 8) {
+    errDiv.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+    errDiv.style.display = 'block'; return;
+  }
+  if(!/^[a-z0-9][a-z0-9\-]{1,28}[a-z0-9]$/.test(slug)) {
+    errDiv.textContent = 'La URL solo puede tener letras minúsculas, números y guiones.';
+    errDiv.style.display = 'block'; return;
+  }
+
+  document.getElementById('btnSubmit').style.display = 'none';
+  document.getElementById('formLoading').style.display = 'block';
+
+  try {
+    const res = await fetch(`${API}/registro/`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({nombre, slug, wa_number: wa, email, password: pass, plan: planActual,
+        template: document.getElementById('inputTemplate')?.value || templateActual})
+    });
+    const data = await res.json();
+
+    if(!res.ok || !data.ok) {
+      throw new Error(data.error || 'Error al crear la tienda');
+    }
+
+    // Mostrar éxito
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('formLoading').style.display = 'none';
+    const sp = document.getElementById('successPage');
+    sp.style.display = 'block';
+
+    const url = `https://${slug}.6c.cl`;
+    document.getElementById('successUrl').textContent = url;
+    document.getElementById('successCreds').innerHTML = `
+      <div class="cred-row"><span class="cred-key">Tienda</span><span class="cred-val">${url}</span></div>
+      <div class="cred-row"><span class="cred-key">Panel admin</span><span class="cred-val">${url}/admin</span></div>
+      <div class="cred-row"><span class="cred-key">Usuario</span><span class="cred-val">admin</span></div>
+      <div class="cred-row"><span class="cred-key">Contraseña</span><span class="cred-val">${pass}</span></div>
+    `;
+    document.getElementById('successWa').href = `${url}/admin`;
+    window._tiendaUrl = url;
+
+  } catch(err) {
+    document.getElementById('formLoading').style.display = 'none';
+    document.getElementById('btnSubmit').style.display = 'block';
+    errDiv.textContent = err.message;
+    errDiv.style.display = 'block';
+  }
+}
+
+function abrirTienda() {
+  if(window._tiendaUrl) window.open(window._tiendaUrl, '_blank');
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') cerrarModal() });
+</script>
+</body>
+</html>
